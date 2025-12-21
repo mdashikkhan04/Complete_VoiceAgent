@@ -4,9 +4,12 @@ version = "0.1.0"
 description = "Minimal AI Voice Agent backend"
 requires-python = ">=3.10"
 
+# Minimal explicit dependencies required to run the API. Keep versions pinned in production.
 dependencies = [
   "fastapi",
+  "uvicorn",
   "pydantic",
+  "httpx",
 ]
 
 [build-system]
