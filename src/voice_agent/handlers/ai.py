@@ -145,6 +145,71 @@ async def generate_support_reply(transcript: str) -> str:
         return ""
 
 
+# Order lookup helpers
+from ..integrations import shopify as shopify_integration
+import re
+
+
+async def generate_order_reply(transcript: str) -> tuple[str, dict | None]:
+    """Detect order-related intent and attempt to return a short reply.
+
+    Returns a tuple (reply_text, order_info) where `order_info` is None
+    when no order lookup was performed, or contains dict details when one
+    occurred (possibly empty if not found).
+    """
+    text = transcript.lower()
+    order_phrases = ["order status", "where is my order", "where's my order", "track my order", "order status for"]
+    if not any(p in text for p in order_phrases):
+        return "", None
+
+    # Attempt to extract an order id (#12345 or long digit sequence)
+    order_id = None
+    m = re.search(r"#\s?(\d+)", transcript)
+    if m:
+        order_id = m.group(1)
+    else:
+        m2 = re.search(r"order(?: number| no\.?| #)?\s*[:#]?\s*([A-Za-z0-9\-]+)", transcript, flags=re.IGNORECASE)
+        if m2:
+            order_id = m2.group(1)
+        else:
+            m3 = re.search(r"\b(\d{5,})\b", transcript)
+            if m3:
+                order_id = m3.group(1)
+
+    if not order_id:
+        # Ask for order number to continue the conversation
+        return "I can check that for you — could you please provide your order number?", {}
+
+    # Try to look up the order via Shopify
+    try:
+        order = await shopify_integration.lookup_order(order_id)
+    except Exception as exc:
+        logger.exception("Order lookup failed: %s", exc)
+        order = None
+
+    if not order:
+        return "I couldn't find that order in our system — could you double-check the order number?", {"searched_order": order_id, "found": False}
+
+    # Build a short, friendly order status reply
+    parts = [f"I found order {order.get('order_number') or order.get('id')}."]
+    if order.get("financial_status"):
+        parts.append(f"Payment status: {order.get('financial_status')}")
+    if order.get("fulfillment_status"):
+        parts.append(f"Fulfillment: {order.get('fulfillment_status')}")
+
+    # Try to include shipment/tracking info if present
+    tracking = []
+    for f in order.get("fulfillments", []):
+        if f.get("tracking_numbers"):
+            tracking.extend(f.get("tracking_numbers"))
+
+    if tracking:
+        parts.append(f"Tracking: {', '.join(tracking)}")
+
+    reply = " ".join(parts)
+    return reply, {"searched_order": order_id, "found": True, "order": order}
+
+
 async def synthesize_speech(text: str) -> bytes:
     """Synthesize speech for given text using OpenAI Text-to-Speech.
 

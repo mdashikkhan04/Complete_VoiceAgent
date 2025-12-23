@@ -22,6 +22,10 @@ app = FastAPI(title="Voice Agent")
 # Include the voice webhooks router at the /voice prefix
 app.include_router(webhooks_router.router, prefix="/voice", tags=["voice"]) 
 
+# VAPI router (vendor-agnostic event ingestion)
+# Mounted using the router's own prefix (/vapi)
+app.include_router(webhooks_router.vapi_router, tags=["vapi"])
+
 
 # Minimal health endpoint used for readiness/liveness checks
 @app.get("/health", response_model=HealthResponse, status_code=200)
