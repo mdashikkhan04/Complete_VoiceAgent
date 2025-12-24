@@ -1,0 +1,76 @@
+{
+    "product": {
+        "name": "Hard Chews",
+        "category": "Male performance supplement",
+        "summary": "All-natural chewable gummies designed to support male vitality, stamina, confidence, and blood flow."
+    },
+    "ingredients": [
+        {
+            "name": "L-Arginine HCl",
+            "benefit": "Improves blood flow and nitric oxide production"
+        },
+        {
+            "name": "Tongkat Ali",
+            "benefit": "Supports testosterone levels and male vitality"
+        },
+        {
+            "name": "Maca Root",
+            "benefit": "Enhances stamina, energy, and mood"
+        },
+        {
+            "name": "Ashwagandha",
+            "benefit": "Reduces stress and supports hormonal balance"
+        },
+        {
+            "name": "Horny Goat Weed",
+            "benefit": "Supports circulation and erectile function"
+        },
+        {
+            "name": "Beet Root",
+            "benefit": "Natural nitrate source for improved blood flow"
+        },
+        {
+            "name": "Grape Seed Extract",
+            "benefit": "Vascular protection and antioxidant support"
+        }
+    ],
+    "usage": {
+        "daily": "Take 1 gummy daily for consistent benefits",
+        "on_demand": "Take 1–2 gummies 30 minutes before intimacy",
+        "max": "Most users take 2–4 gummies per day"
+    },
+    "shipping": {
+        "us": "3–7 business days",
+        "international": "7–21 business days",
+        "tracking": "Tracking provided for every order"
+    },
+    "pricing": {
+        "1_bottle": "$69–$89",
+        "3_bottles": "Discounted bundle",
+        "6_bottles": "Best value bundle with free shipping"
+    },
+    "refund_policy": {
+        "days": 180,
+        "type": "No questions asked",
+        "method": "Refund via ClickBank"
+    },
+    "safety": {
+        "age": "Safe for men 40+ (consult doctor)",
+        "diabetes": "Low sugar (<1g per gummy)",
+        "medications": "Do not combine with nitrate medications"
+    },
+    "faqs": [
+        {
+            "question": "Is Hard Chews natural?",
+            "answer": "Yes, it is made with all-natural ingredients in an FDA-registered facility."
+        },
+        {
+            "question": "How fast does it work?",
+            "answer": "Most users feel effects within 20–40 minutes."
+        },
+        {
+            "question": "Is it discreet?",
+            "answer": "Yes, billing and shipping are fully discreet."
+        }
+    ]
+}
